@@ -1,67 +1,53 @@
 <!doctype html>
 <html lang="uk">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#17191c"><link rel="manifest" href="manifest.json">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#17191b">
+<link rel="manifest" href="manifest.json">
 <title>Continera Door Control</title>
 <style>
-:root{color-scheme:dark;--shell:#777b7d;--shell2:#34383b;--key:#73777a;--keyhi:#929698;--edge:#24282b;--white:#f1f2ef;--active:#e1b65f}
-*{box-sizing:border-box}body{margin:0;min-height:100svh;display:grid;place-items:center;padding:22px 14px;background:radial-gradient(ellipse at 50% 38%,#34383b,#151719 72%);font-family:Arial,system-ui,sans-serif;color:#eee}
-.app{width:min(100%,430px)}header{display:flex;justify-content:space-between;align-items:center;margin:0 5px 17px}.brand{font-size:12px;font-weight:800;letter-spacing:.2em;color:#e4e6e6}.caption{font-size:10px;color:#9ca2a5;margin-top:5px}.ready{font-size:10px;letter-spacing:.1em;color:#aeb5b8}
-.shell{padding:19px 18px 17px;border-radius:34px 34px 42px 42px;background:linear-gradient(145deg,#a0a3a3 0%,#686d70 28%,#3b4043 100%);box-shadow:0 25px 55px #0009,inset 0 2px 3px #ffffff55,inset 0 -5px 10px #0008}
-.face{position:relative;padding:9px;border:3px solid #25292c;border-radius:25px 25px 31px 31px;background:linear-gradient(145deg,#555a5d,#44494c 65%,#34393c);box-shadow:inset 0 2px 5px #0009}
-.layout{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:104px 104px 88px 92px;gap:5px}
-.key{border:0;border-radius:4px;background:linear-gradient(155deg,#85898b,#666b6e 72%);box-shadow:0 4px 0 #272b2e,inset 0 1px 1px #ffffff55;color:var(--white);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;min-width:0;transition:filter .12s,transform .1s,background .15s;touch-action:manipulation}
-.key:active{transform:translateY(3px);box-shadow:0 1px 0 #272b2e}.key.active{background:linear-gradient(150deg,#b59a67,#77705f);color:#fff2d1;box-shadow:0 4px 0 #292723,inset 0 1px 2px #fff8,0 0 12px #e1b65f35}
-.key svg{width:29px;height:29px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 1px 1px #3338)}
-.k-window-l{grid-column:1;grid-row:1}.k-heat{grid-column:2;grid-row:1}.k-window-r{grid-column:3;grid-row:1}.k-mirror-l{grid-column:1;grid-row:2}.k-joystick{grid-column:2;grid-row:2;z-index:2}.k-mirror-r{grid-column:3;grid-row:2}.k-unlock{grid-column:2;grid-row:3}.k-disabled-l{grid-column:1;grid-row:4}.k-lock{grid-column:2;grid-row:4}.k-disabled-r{grid-column:3;grid-row:4}
-.joy{width:91px;height:91px;border-radius:50%;background:linear-gradient(145deg,#34393c,#777c7f 48%,#34393c);border:4px solid #292e31;box-shadow:0 3px 0 #202427,inset 0 1px 3px #ffffff66;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr 1fr;padding:7px;gap:1px}
-.dir{border:0;background:transparent;color:#f1f2ef;font-size:17px;display:grid;place-items:center;padding:0;border-radius:9px;cursor:pointer}.dir.active{background:#d2aa5b;color:#262626}.up{grid-column:2;grid-row:1}.left{grid-column:1;grid-row:2}.right{grid-column:3;grid-row:2}.down{grid-column:2;grid-row:3}.center-dot{grid-column:2;grid-row:2;align-self:center;justify-self:center;width:9px;height:9px;border-radius:50%;background:#d9dcda;box-shadow:0 0 3px #fff}
-.lockicon{width:30px;height:34px}.disabled{opacity:.25;cursor:not-allowed;box-shadow:0 3px 0 #272b2e}.disabled:active{transform:none}.foot{display:flex;justify-content:space-between;align-items:center;margin:16px 4px 0;color:#9da4a7;font-size:10px}.reset{background:none;border:0;color:#d1d5d5;text-decoration:underline;text-underline-offset:3px;font:inherit;cursor:pointer}.message{height:18px;margin-top:12px;text-align:center;color:#e2c17f;font-size:11px}
-@media(max-width:360px){.shell{padding:13px}.face{padding:7px}.layout{grid-template-rows:88px 94px 78px 82px}.joy{width:82px;height:82px}.key svg{width:25px;height:25px}}
+:root{color-scheme:dark;--bg:#17191b;--shell:#777b7c;--face:#484c4e;--key:#777b7d;--key-hi:#929697;--ink:#f2f1ec;--gold:#d8b46e}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;display:grid;place-items:center;padding:22px;background:radial-gradient(ellipse at 50% 42%,#3b3e40,#17191b 72%);font-family:Arial,system-ui,sans-serif;color:var(--ink)}
+main{width:min(100%,430px)}.panel{position:relative;padding:24px 20px 20px;border-radius:42px 42px 48px 48px;background:linear-gradient(145deg,#a0a2a1 0%,#777b7c 24%,#555a5c 70%,#363a3c 100%);box-shadow:0 26px 60px #0009,inset 0 2px 4px #ffffff70,inset 0 -7px 12px #0008}
+.face{padding:10px;border:4px solid #262a2c;border-radius:32px 32px 39px 39px;background:linear-gradient(145deg,#626668,#45494b 75%,#35393b);box-shadow:inset 0 2px 6px #0009}
+.keys{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:100px 100px 83px 90px;gap:5px;position:relative}
+.key{appearance:none;min-width:0;border:0;border-radius:4px;background:linear-gradient(150deg,#929697,#686d6f 78%);box-shadow:0 5px 0 #25292b,inset 0 1px 1px #ffffff66;color:#f4f3ee;display:grid;place-items:center;cursor:pointer;touch-action:manipulation;transition:background .12s,transform .1s,box-shadow .1s}
+.key:active{transform:translateY(3px);box-shadow:0 2px 0 #25292b}.key.active{background:linear-gradient(150deg,#c0a16a,#82765f);box-shadow:0 5px 0 #292722,inset 0 1px 2px #fff8,0 0 13px #d8b46e35}
+.key svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.a{grid-column:1;grid-row:1}.b{grid-column:2;grid-row:1}.c{grid-column:3;grid-row:1}.d{grid-column:1;grid-row:2}.e{grid-column:2;grid-row:2;z-index:2}.f{grid-column:3;grid-row:2}.g{grid-column:2;grid-row:3}.h{grid-column:1;grid-row:4}.i{grid-column:2;grid-row:4}.j{grid-column:3;grid-row:4}
+.joystick{width:100px;height:100px;border-radius:50%;padding:7px;border:5px solid #292e30;background:linear-gradient(145deg,#33383a,#85898a 52%,#363b3d);box-shadow:0 4px 0 #202426,inset 0 1px 3px #fff8;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);gap:1px}
+.dir{border:0;border-radius:8px;background:transparent;color:#f4f3ee;font-size:20px;display:grid;place-items:center;padding:0;cursor:pointer}.dir.active{background:#d8b46e;color:#262626}.up{grid-area:1/2}.left{grid-area:2/1}.right{grid-area:2/3}.down{grid-area:3/2}.hub{grid-area:2/2;align-self:center;justify-self:center;width:9px;height:9px;border-radius:50%;background:#f5f4ed;box-shadow:0 0 4px #fff}
+.lock{width:32px;height:36px}.disabled{opacity:.24;cursor:default;box-shadow:0 4px 0 #25292b}.disabled:active{transform:none}
+@media(max-width:360px){.panel{padding:17px 13px}.face{padding:7px}.keys{grid-template-rows:86px 90px 72px 78px}.joystick{width:86px;height:86px}.key svg{width:26px;height:26px}}
 </style>
 </head>
-<body><main class="app">
-<header><div><div class="brand">CONTINERA</div><div class="caption">Door Control · DAF XG+</div></div><div class="ready">● READY</div></header>
-<section class="shell" aria-label="Панель керування на дверях DAF XG+"><div class="face"><div class="layout">
-<button class="key k-window-l" data-id="window-driver" title="Керування вікном водія" aria-label="Вікно водія"><svg viewBox="0 0 32 32"><rect x="6" y="4" width="20" height="24" rx="3"/><path d="M11 21V11h10v10M16 25V14m-3 3 3-3 3 3"/></svg></button>
-<button class="key k-heat" data-id="mirror-heat" title="Обігрів дзеркал" aria-label="Обігрів дзеркал"><svg viewBox="0 0 32 32"><path d="M8 25c-4-5 4-6 0-12M16 25c-4-5 4-6 0-12M24 25c-4-5 4-6 0-12"/></svg></button>
-<button class="key k-window-r" data-id="window-passenger" title="Керування вікном пасажира" aria-label="Вікно пасажира"><svg viewBox="0 0 32 32"><rect x="6" y="4" width="20" height="24" rx="3"/><path d="M11 11v10h10V11M16 7v11m-3-3 3 3 3-3"/></svg></button>
-<button class="key k-mirror-l" data-mirror="left" title="Вибрати ліве дзеркало" aria-label="Ліве дзеркало"><svg viewBox="0 0 32 32"><path d="M7 10q0-4 5-4h8q5 0 5 5v9q0 5-5 5h-8q-5 0-5-5z"/><path d="M12 11h8v10h-8zM4 16h3"/></svg></button>
-<div class="k-joystick"><div class="joy" role="group" aria-label="Регулювання положення дзеркала">
-<button class="dir up" data-dir="up" aria-label="Вгору">⌃</button><button class="dir left" data-dir="left" aria-label="Ліворуч">‹</button><span class="center-dot"></span><button class="dir right" data-dir="right" aria-label="Праворуч">›</button><button class="dir down" data-dir="down" aria-label="Вниз">⌄</button>
+<body>
+<main>
+<section class="panel" aria-label="Панель керування DAF XG+">
+<div class="face"><div class="keys">
+<button class="key a" data-toggle="window-left" aria-label="Кнопка верхня ліва" aria-pressed="false"><svg viewBox="0 0 32 32"><rect x="6" y="4" width="20" height="24" rx="3"/><path d="M11 22V10h10v12M16 25V13m-3 3 3-3 3 3"/></svg></button>
+<button class="key b" data-toggle="heat" aria-label="Обігрів дзеркал" aria-pressed="false"><svg viewBox="0 0 32 32"><path d="M8 25c-4-5 4-7 0-13M16 25c-4-5 4-7 0-13M24 25c-4-5 4-7 0-13"/></svg></button>
+<button class="key c" data-toggle="window-right" aria-label="Кнопка верхня права" aria-pressed="false"><svg viewBox="0 0 32 32"><rect x="6" y="4" width="20" height="24" rx="3"/><path d="M11 10v12h10V10M16 7v11m-3-3 3 3 3-3"/></svg></button>
+<button class="key d" data-toggle="mirror-left" aria-label="Ліва кнопка біля джойстика" aria-pressed="false"><svg viewBox="0 0 32 32"><rect x="7" y="8" width="18" height="16" rx="4"/><path d="M12 12h8v8h-8z"/></svg></button>
+<div class="e"><div class="joystick" aria-label="Джойстик регулювання дзеркал">
+<button class="dir up" data-dir="up" aria-label="Вгору">⌃</button><button class="dir left" data-dir="left" aria-label="Ліворуч">‹</button><span class="hub"></span><button class="dir right" data-dir="right" aria-label="Праворуч">›</button><button class="dir down" data-dir="down" aria-label="Вниз">⌄</button>
 </div></div>
-<button class="key k-mirror-r" data-mirror="right" title="Вибрати праве дзеркало" aria-label="Праве дзеркало"><svg viewBox="0 0 32 32"><path d="M7 10q0-4 5-4h8q5 0 5 5v9q0 5-5 5h-8q-5 0-5-5z"/><path d="M12 11h8v10h-8zM25 16h3"/></svg></button>
-<button class="key k-unlock" data-id="unlock" title="Відімкнути двері" aria-label="Відімкнути двері"><svg class="lockicon" viewBox="0 0 32 36"><rect x="5" y="15" width="22" height="17" rx="2"/><path d="M10 15V10a6 6 0 0 1 12 0v2M16 21v6"/></svg></button>
-<button class="key disabled k-disabled-l" disabled aria-label="Неактивна кнопка"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="10"/></svg></button>
-<button class="key k-lock" data-id="lock" title="Зачинити двері" aria-label="Зачинити двері"><svg class="lockicon" viewBox="0 0 32 36"><rect x="5" y="15" width="22" height="17" rx="2"/><path d="M10 15V10a6 6 0 0 1 12 0v5M16 21v6"/></svg></button>
-<button class="key disabled k-disabled-r" disabled aria-label="Неактивна кнопка"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="10"/></svg></button>
+<button class="key f" data-toggle="mirror-right" aria-label="Права кнопка біля джойстика" aria-pressed="false"><svg viewBox="0 0 32 32"><rect x="7" y="8" width="18" height="16" rx="4"/><path d="M12 12h8v8h-8z"/></svg></button>
+<button class="key g" data-toggle="unlock" aria-label="Відімкнути замок" aria-pressed="false"><svg class="lock" viewBox="0 0 32 36"><rect x="5" y="15" width="22" height="17" rx="2"/><path d="M10 15V10a6 6 0 0 1 12 0v3M16 21v6"/></svg></button>
+<button class="key disabled h" disabled aria-label="Неактивна нижня ліва кнопка"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="10"/></svg></button>
+<button class="key i" data-toggle="lock" aria-label="Замкнути замок" aria-pressed="false"><svg class="lock" viewBox="0 0 32 36"><rect x="5" y="15" width="22" height="17" rx="2"/><path d="M10 15V10a6 6 0 0 1 12 0v5M16 21v6"/></svg></button>
+<button class="key disabled j" disabled aria-label="Неактивна нижня права кнопка"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="10"/></svg></button>
 </div></div></section>
-<footer class="foot"><span>CONTINERA · DAF XG+ 530</span><button class="reset" id="reset">Скинути стани</button></footer><div class="message" id="message" aria-live="polite"></div>
 </main>
 <script>
-const KEY='continera-door-control-v2';
-const defaults={};
-let state={};
-try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch{state={}}
-const msg=document.getElementById('message');
-function save(){localStorage.setItem(KEY,JSON.stringify(state));}
-function render(){
- document.querySelectorAll('[data-id]').forEach(b=>{const on=!!state[b.dataset.id];b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on));});
- document.querySelectorAll('[data-mirror]').forEach(b=>{const on=state.mirror===b.dataset.mirror;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on));});
- document.querySelectorAll('[data-dir]').forEach(b=>b.classList.toggle('active',state.direction===b.dataset.dir));
-}
-const names={'window-driver':'Вікно водія','window-passenger':'Вікно пасажира','mirror-heat':'Обігрів дзеркал',unlock:'Відімкнення дверей',lock:'Центральне блокування'};
-document.querySelectorAll('[data-id]').forEach(b=>b.addEventListener('click',()=>{
- const id=b.dataset.id;state[id]=!state[id];save();render();msg.textContent=names[id]+(state[id]?' — активовано':' — вимкнено');
-}));
-document.querySelectorAll('[data-mirror]').forEach(b=>b.addEventListener('click',()=>{
- state.mirror=b.dataset.mirror;save();render();msg.textContent='Обрано '+(state.mirror==='left'?'ліве':'праве')+' дзеркало';
-}));
-document.querySelectorAll('[data-dir]').forEach(b=>b.addEventListener('click',()=>{
- state.direction=b.dataset.dir;save();render();msg.textContent='Напрямок регулювання: '+({up:'вгору',down:'вниз',left:'ліворуч',right:'праворуч'}[state.direction]);
-}));
-document.getElementById('reset').addEventListener('click',()=>{state={};save();render();msg.textContent='Стани скинуто';});
+const STORAGE='continera-door-control-panel-v3';
+let state={};try{state=JSON.parse(localStorage.getItem(STORAGE)||'{}')||{}}catch{}
+function save(){localStorage.setItem(STORAGE,JSON.stringify(state))}
+function render(){document.querySelectorAll('[data-toggle]').forEach(b=>{const active=!!state[b.dataset.toggle];b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});document.querySelectorAll('[data-dir]').forEach(b=>b.classList.toggle('active',state.direction===b.dataset.dir))}
+document.querySelectorAll('[data-toggle]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.toggle;state[id]=!state[id];save();render()}));
+document.querySelectorAll('[data-dir]').forEach(b=>b.addEventListener('click',()=>{state.direction=b.dataset.dir;save();render()}));
 render();
 if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-</script></body></html>
+</script>
+</body></html>
