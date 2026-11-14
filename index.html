@@ -44,7 +44,7 @@ main{width:min(100%,430px)}.panel{position:relative;padding:24px 20px 20px;borde
 const STORAGE='continera-door-control-panel-v3';
 let state={};try{state=JSON.parse(localStorage.getItem(STORAGE)||'{}')||{}}catch{}
 function save(){localStorage.setItem(STORAGE,JSON.stringify(state))}
-function render(){document.querySelectorAll('[data-toggle]').forEach(b=>{const active=!!state[b.dataset.toggle];b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});document.querySelectorAll('[data-dir]').forEach(b=>b.classList.toggle('active',state.direction===b.dataset.dir))}
+function render(){document.querySelectorAll('[data-toggle]').forEach(b=>{const active=!!state[b.dataset.toggle];b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});}
 document.querySelectorAll('[data-toggle]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.toggle;state[id]=!state[id];save();render()}));
 document.querySelectorAll('[data-dir]').forEach(b=>{
   const press=()=>b.classList.add('active');
