@@ -46,17 +46,36 @@ let state={};try{state=JSON.parse(localStorage.getItem(STORAGE)||'{}')||{}}catch
 function save(){localStorage.setItem(STORAGE,JSON.stringify(state))}
 function render(){document.querySelectorAll('[data-toggle]').forEach(b=>{const active=!!state[b.dataset.toggle];b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});}
 document.querySelectorAll('[data-toggle]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.toggle;state[id]=!state[id];save();render()}));
+let activeDirection=null;
+function clearDirection(){
+  document.querySelectorAll('[data-dir].active').forEach(button=>button.classList.remove('active'));
+  activeDirection=null;
+}
 document.querySelectorAll('[data-dir]').forEach(b=>{
-  const press=()=>b.classList.add('active');
-  const release=()=>b.classList.remove('active');
-  b.addEventListener('pointerdown',event=>{event.preventDefault();b.setPointerCapture(event.pointerId);press()});
-  b.addEventListener('pointerup',release);
-  b.addEventListener('pointercancel',release);
-  b.addEventListener('lostpointercapture',release);
-  b.addEventListener('blur',release);
-  b.addEventListener('keydown',event=>{if(event.key===' '||event.key==='Enter')press()});
-  b.addEventListener('keyup',event=>{if(event.key===' '||event.key==='Enter')release()});
+  b.addEventListener('pointerdown',event=>{
+    event.preventDefault();
+    clearDirection();
+    activeDirection=b;
+    b.classList.add('active');
+    try{b.setPointerCapture(event.pointerId)}catch{}
+  });
+  b.addEventListener('keydown',event=>{
+    if(event.key===' '||event.key==='Enter'){
+      event.preventDefault();
+      clearDirection();
+      activeDirection=b;
+      b.classList.add('active');
+    }
+  });
+  b.addEventListener('keyup',event=>{
+    if(event.key===' '||event.key==='Enter')clearDirection();
+  });
+  b.addEventListener('lostpointercapture',clearDirection);
 });
+window.addEventListener('pointerup',clearDirection,true);
+window.addEventListener('pointercancel',clearDirection,true);
+window.addEventListener('blur',clearDirection);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)clearDirection()});
 render();
 if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script>
