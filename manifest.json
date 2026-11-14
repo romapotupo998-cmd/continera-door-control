@@ -1,0 +1,11 @@
+{
+  "name": "Continera Door Control",
+  "short_name": "Door Control",
+  "description": "Інтерактивна панель керування дверима DAF XG+",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#101214",
+  "theme_color": "#17191c"
+}
