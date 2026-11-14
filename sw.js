@@ -1,5 +1,5 @@
-const CACHE='continera-door-control-v7';
-const FILES=['./','./index.html','./manifest.json'];
+const CACHE='continera-door-control-v8';
+const FILES=['./','./index.html','./manifest.json','./icons/icon-192.png','./icons/icon-512.png'];
 
 self.addEventListener('install', event => {
   event.waitUntil(
