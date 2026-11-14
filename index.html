@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#17191c">
+  <meta name="description" content="Continera Door Control — інтерактивна панель керування дверима DAF XG+.">
+  <link rel="manifest" href="manifest.json">
+  <title>Continera Door Control</title>
+  <style>
+    :root{color-scheme:dark;--bg:#101214;--panel:#25282c;--panel2:#1b1e21;--key:#34393e;--line:#454b51;--text:#edf0f2;--muted:#929ba3;--on:#d5a64a;--green:#77b78a}
+    *{box-sizing:border-box}body{margin:0;min-height:100svh;background:radial-gradient(ellipse at 50% 0%,#30353a 0,#171a1d 48%,#0d0f11 100%);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);display:grid;place-items:center;padding:24px 14px}
+    .app{width:min(100%,480px)}header{display:flex;align-items:center;justify-content:space-between;margin:0 2px 18px}.brand{font-size:12px;letter-spacing:.19em;color:#c3c9ce;font-weight:800}.sub{font-size:11px;color:var(--muted);margin-top:5px}.status{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted)}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px #77b78a66}
+    .housing{padding:20px;border:1px solid #454a50;border-radius:28px;background:linear-gradient(145deg,#303438,#1c1f22 55%,#17191b);box-shadow:0 28px 70px #0009,inset 0 1px #ffffff12}
+    .topline{display:flex;justify-content:space-between;align-items:center;margin:0 2px 18px}.model{font-size:11px;font-weight:700;letter-spacing:.12em;color:#c0c6ca}.power{font-size:10px;color:var(--muted);letter-spacing:.08em}
+    .display{background:linear-gradient(180deg,#111416,#1a1d20);border:1px solid #3c4247;border-radius:15px;padding:13px 14px;margin-bottom:17px;display:flex;justify-content:space-between;align-items:center}.display strong{font-size:12px;letter-spacing:.04em}.display small{display:block;color:var(--muted);font-size:10px;margin-top:4px}.indicator{font-size:10px;color:var(--green);letter-spacing:.08em}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.control{appearance:none;border:1px solid #4b5157;border-radius:15px;background:linear-gradient(150deg,#41474d,#292e33 70%);color:var(--text);min-height:94px;padding:12px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 0 #151719, inset 0 1px #ffffff12;cursor:pointer;transition:transform .12s,border-color .15s,background .15s,box-shadow .15s;touch-action:manipulation}
+    .control:active{transform:translateY(3px);box-shadow:0 1px 0 #151719}.control.active{border-color:#c99a43;background:linear-gradient(150deg,#5a4a2d,#34302a 75%);box-shadow:0 4px 0 #171615,inset 0 1px #ffffff18,0 0 18px #d5a64a20}.symbol{font-size:25px;line-height:1;height:28px;color:#e1e5e8}.control.active .symbol{color:#f1c36b}.name{font-size:11px;font-weight:650;text-align:center;line-height:1.25}.hint{font-size:9px;color:#aeb6bc;text-align:center}
+    .divider{height:1px;background:#ffffff17;margin:17px 2px 13px}.bottom{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.control.inactive{opacity:.42;cursor:not-allowed;filter:saturate(.35);box-shadow:0 4px 0 #151719}.foot{display:flex;justify-content:space-between;gap:12px;margin:18px 3px 0;color:#78828a;font-size:10px}.reset{border:0;background:none;color:#b8c0c6;font:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:0}.toast{min-height:17px;text-align:center;color:#d7b36d;font-size:11px;margin-top:12px}
+    @media(max-width:360px){.housing{padding:15px}.control{min-height:86px}.name{font-size:10px}}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header><div><div class="brand">CONTINERA</div><div class="sub">Door Control · DAF XG+</div></div><div class="status"><span class="dot"></span><span>СИСТЕМА ГОТОВА</span></div></header>
+    <section class="housing" aria-label="Панель керування дверима">
+      <div class="topline"><span class="model">DAF XG+ 530</span><span class="power">CABIN CONTROL</span></div>
+      <div class="display"><div><strong>КЕРУВАННЯ ДВЕРИМА</strong><small>Стан перемикачів панелі</small></div><span class="indicator" id="stateLabel">АКТИВНО</span></div>
+      <div class="grid" id="controls">
+        <button class="control" data-id="driver-window" aria-pressed="false"><span class="symbol">⇅</span><span class="name">Вікно водія</span><span class="hint">Електросклопідіймач</span></button>
+        <button class="control" data-id="passenger-window" aria-pressed="false"><span class="symbol">⇵</span><span class="name">Вікно пасажира</span><span class="hint">Електросклопідіймач</span></button>
+        <button class="control" data-id="mirror-adjust" aria-pressed="false"><span class="symbol">◉</span><span class="name">Регулювання дзеркал</span><span class="hint">Режим налаштування</span></button>
+        <button class="control" data-id="mirror-heat" aria-pressed="false"><span class="symbol">♨</span><span class="name">Обігрів дзеркал</span><span class="hint">Увімкнути / вимкнути</span></button>
+        <button class="control" data-id="central-lock" aria-pressed="false"><span class="symbol">▣</span><span class="name">Центральний замок</span><span class="hint">Блокування дверей</span></button>
+        <button class="control" data-id="window-lock" aria-pressed="false"><span class="symbol">▤</span><span class="name">Блокування вікон</span><span class="hint">Захист перемикачів</span></button>
+      </div>
+      <div class="divider"></div>
+      <div class="bottom">
+        <button class="control inactive" type="button" disabled aria-disabled="true"><span class="symbol">—</span><span class="name">Неактивна кнопка</span><span class="hint">Недоступно</span></button>
+        <button class="control inactive" type="button" disabled aria-disabled="true"><span class="symbol">—</span><span class="name">Неактивна кнопка</span><span class="hint">Недоступно</span></button>
+      </div>
+      <div class="toast" id="toast" aria-live="polite"></div>
+    </section>
+    <footer class="foot"><span>CONTINERA · 2026</span><button class="reset" id="reset" type="button">Скинути стани</button></footer>
+  </main>
+  <script>
+    const KEY='continera-door-control-v1';
+    const labels={
+      'driver-window':'Вікно водія','passenger-window':'Вікно пасажира',
+      'mirror-adjust':'Регулювання дзеркал','mirror-heat':'Обігрів дзеркал',
+      'central-lock':'Центральний замок','window-lock':'Блокування вікон'
+    };
+    const buttons=[...document.querySelectorAll('.control[data-id]')];
+    const toast=document.getElementById('toast');
+    let states={};
+    try{states=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch{states={}}
+    function render(){
+      buttons.forEach(button=>{
+        const active=Boolean(states[button.dataset.id]);
+        button.classList.toggle('active',active);
+        button.setAttribute('aria-pressed',String(active));
+      });
+      const any=Object.values(states).some(Boolean);
+      document.getElementById('stateLabel').textContent=any?'Є УВІМКНЕНІ':'АКТИВНО';
+    }
+    buttons.forEach(button=>button.addEventListener('click',()=>{
+      const id=button.dataset.id;
+      states[id]=!states[id];
+      localStorage.setItem(KEY,JSON.stringify(states));
+      render();
+      toast.textContent=labels[id]+(states[id]?' — увімкнено':' — вимкнено');
+    }));
+    document.getElementById('reset').addEventListener('click',()=>{
+      states={};localStorage.setItem(KEY,JSON.stringify(states));render();
+      toast.textContent='Усі стани скинуто';
+    });
+    render();
+    if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
+  </script>
+</body>
+</html>
