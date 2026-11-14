@@ -1,4 +1,4 @@
-const CACHE='continera-door-control-v4';
+const CACHE='continera-door-control-v5';
 const FILES=['./','./index.html','./manifest.json'];
 
 self.addEventListener('install', event => {
